@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/provider/aith_provider.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -28,6 +29,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -36,42 +41,50 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(hintText: "Enter your email"),
-            ),
-            TextFormField(
-              controller: _password,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration:
-                  const InputDecoration(hintText: "Enter your password"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-
-                final userCredential =
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
-                print(userCredential);
-              },
-              child: const Center(
-                child: Text(
-                  "Register",
+        child: Center(
+          child: SizedBox(
+            width: width * 0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration:
+                      const InputDecoration(hintText: "Enter your email"),
                 ),
-              ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                TextFormField(
+                  controller: _password,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration:
+                      const InputDecoration(hintText: "Enter your password"),
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    await authProvider.registration(
+                        context: context, email: email, password: password);
+                  },
+                  child: const Center(
+                    child: Text(
+                      "Register",
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
