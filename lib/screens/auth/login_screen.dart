@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({Key? key}) : super(key: key);
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -32,12 +33,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
+    Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Register",
+          "Login",
         ),
       ),
       body: SafeArea(
@@ -53,7 +54,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration:
-                      const InputDecoration(hintText: "Enter your email"),
+                  const InputDecoration(hintText: "Enter your email"),
                 ),
                 SizedBox(
                   height: height * 0.01,
@@ -64,7 +65,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration:
-                      const InputDecoration(hintText: "Enter your password"),
+                  const InputDecoration(hintText: "Enter your password"),
                 ),
                 SizedBox(
                   height: height * 0.01,
@@ -73,12 +74,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onPressed: () async {
                     final email = _email.text;
                     final password = _password.text;
-                    await authProvider.registration(
+                    await authProvider.singIn(
                         context: context, email: email, password: password);
                   },
                   child: const Center(
                     child: Text(
-                      "Register",
+                      "Login",
                     ),
                   ),
                 ),

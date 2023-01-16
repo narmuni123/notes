@@ -15,4 +15,18 @@ class AuthProvider extends ChangeNotifier {
     }
     return true;
   }
+
+  Future<bool> singIn(
+      {required context,
+        required String email,
+        required String password}) async {
+    final value = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    if (kDebugMode) {
+      print(value);
+    }
+    return true;
+  }
 }
