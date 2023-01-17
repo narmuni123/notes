@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/provider/auth_provider.dart';
 import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:mynotes/screens/auth/registration_screen.dart';
+import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -26,8 +27,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const LoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
 }
+

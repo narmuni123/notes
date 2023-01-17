@@ -46,6 +46,9 @@ class AuthProvider extends ChangeNotifier {
         password: password,
       );
       loginModel = value;
+      if (kDebugMode) {
+        print(value);
+      }
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
