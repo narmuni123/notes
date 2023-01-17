@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/provider/auth_provider.dart';
-import 'package:mynotes/screens/auth/login_screen.dart';
-import 'package:mynotes/screens/auth/registration_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:provider/provider.dart';
 

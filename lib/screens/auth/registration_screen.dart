@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/provider/auth_provider.dart';
+import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -80,6 +81,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Text(
                       "Register",
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Login",
                   ),
                 ),
               ],

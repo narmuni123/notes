@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/screens/auth/login_screen.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({Key? key}) : super(key: key);
@@ -34,6 +35,21 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                   await user?.sendEmailVerification();
                 },
                 child: const Text("Verify email"),
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Login",
+                ),
               ),
             ],
           ),

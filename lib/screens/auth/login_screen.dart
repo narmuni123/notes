@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/provider/auth_provider.dart';
+import 'package:mynotes/screens/auth/registration_screen.dart';
+import 'package:mynotes/screens/auth/verify_email_screen.dart';
+import 'package:mynotes/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -33,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     AuthProvider authProvider =
-    Provider.of<AuthProvider>(context, listen: false);
+        Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration:
-                  const InputDecoration(hintText: "Enter your email"),
+                      const InputDecoration(hintText: "Enter your email"),
                 ),
                 SizedBox(
                   height: height * 0.01,
@@ -65,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration:
-                  const InputDecoration(hintText: "Enter your password"),
+                      const InputDecoration(hintText: "Enter your password"),
                 ),
                 SizedBox(
                   height: height * 0.01,
@@ -74,13 +79,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     final email = _email.text;
                     final password = _password.text;
-                    await authProvider.singIn(
+                    final response = await authProvider.singIn(
                         context: context, email: email, password: password);
+                    if (response == true) {
+                      final user = FirebaseAuth.instance.currentUser;
+                      if (user?.emailVerified ?? false) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const VerifyEmailScreen(),
+                          ),
+                        );
+                      }
+                    }
                   },
                   child: const Center(
                     child: Text(
                       "Login",
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const RegistrationScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Register",
                   ),
                 ),
               ],

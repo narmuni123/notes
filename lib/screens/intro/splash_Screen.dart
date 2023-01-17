@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:mynotes/screens/auth/verify_email_screen.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,22 +11,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
-    checkUser();
+    init(context);
     super.initState();
   }
 
-  checkUser() async{
-    final user = FirebaseAuth.instance.currentUser;
-    if(user?.emailVerified ?? false){
-
-    } else{
+  init(context) async {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const VerifyEmailScreen(),),
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
       );
-    }
+    });
   }
 
   @override
