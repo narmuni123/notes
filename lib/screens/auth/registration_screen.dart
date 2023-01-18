@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/interactive_constant.dart';
 import 'package:mynotes/provider/auth_provider.dart';
 import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:provider/provider.dart';
@@ -76,11 +77,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     final password = _password.text;
                     final resp = await authProvider.registration(
                         context: context, email: email, password: password);
-                    if(resp == true){
+                    if (resp == true) {
                       Navigator.of(context)
                           .pushNamedAndRemoveUntil("/login/", (route) => false);
-                    }else{
-
+                    } else {
+                      snackBar(context: context, title: "Try again later");
                     }
                   },
                   child: const Center(
