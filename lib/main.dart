@@ -1,6 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/provider/auth_provider.dart';
+import 'package:mynotes/screens/auth/login_screen.dart';
+import 'package:mynotes/screens/auth/registration_screen.dart';
+import 'package:mynotes/screens/auth/verify_email_screen.dart';
+import 'package:mynotes/screens/home/home_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +29,14 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SplashScreen(),
+        initialRoute: "/splash/",
+        routes: {
+          "/splash/": (context) => const SplashScreen(),
+          "/login/": (context) => const LoginScreen(),
+          "/register/": (context) => const RegistrationScreen(),
+          "/homeScreen/": (context) => const HomeScreen(),
+          "/emailVerify/": (context) => const VerifyEmailScreen(),
+        },
       ),
     );
   }

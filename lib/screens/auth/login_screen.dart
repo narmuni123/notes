@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/provider/auth_provider.dart';
-import 'package:mynotes/screens/auth/registration_screen.dart';
-import 'package:mynotes/screens/auth/verify_email_screen.dart';
-import 'package:mynotes/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -84,17 +79,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (response == true) {
                       final user = FirebaseAuth.instance.currentUser;
                       if (user?.emailVerified ?? false) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/homeScreen/", (route) => false);
                       } else {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const VerifyEmailScreen(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/verifyEmail/", (route) => false);
                       }
                     }
                   },
@@ -109,11 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const RegistrationScreen(),
-                      ),
-                    );
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "/register/", (route) => false);
                   },
                   child: const Text(
                     "Register",

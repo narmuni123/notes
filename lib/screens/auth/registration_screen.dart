@@ -74,8 +74,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onPressed: () async {
                     final email = _email.text;
                     final password = _password.text;
-                    await authProvider.registration(
+                    final resp = await authProvider.registration(
                         context: context, email: email, password: password);
+                    if(resp == true){
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil("/login/", (route) => false);
+                    }else{
+
+                    }
                   },
                   child: const Center(
                     child: Text(
@@ -88,11 +94,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    );
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil("/login/", (route) => false);
                   },
                   child: const Text(
                     "Login",
