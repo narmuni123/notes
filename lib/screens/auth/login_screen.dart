@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/interactive_constant.dart';
 import 'package:mynotes/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -85,6 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             "/verifyEmail/", (route) => false);
                       }
+                    }else{
+                      snackBar(context: context, title: "Try again later");
                     }
                   },
                   child: const Center(
