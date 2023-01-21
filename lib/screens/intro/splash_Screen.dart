@@ -1,5 +1,9 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/screens/auth/login_screen.dart';
+import 'package:mynotes/screens/home/home_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,31 +14,17 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState() {
-    init(context);
-    super.initState();
-  }
-
-  init(context) async {
-    Future.delayed(const Duration(seconds: 2), () {
-      final user  = FirebaseAuth.instance.currentUser;
-      if(user != null){
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil("/homeScreen/", (route) => false);
-      }else{
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil("/login/", (route) => false);
-      }
-
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final user = FirebaseAuth.instance.currentUser;
+    return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Text("Welcome"),
+        child: AnimatedSplashScreen(
+          duration: 3000,
+          splash: Icons.home,
+          nextScreen: (user != null) ? const HomeScreen() : const LoginScreen(),
+          splashTransition: SplashTransition.fadeTransition,
+          pageTransitionType: PageTransitionType.fade,
+          backgroundColor: Colors.white,
         ),
       ),
     );
