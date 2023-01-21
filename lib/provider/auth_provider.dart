@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+enum MenuAction {logout}
+
 class AuthProvider extends ChangeNotifier {
+
   Future<bool> registration(
       {required context,
       required String email,
