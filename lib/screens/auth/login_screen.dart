@@ -29,12 +29,31 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  signIn(context) async {
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
+    final email = _email.text;
+    final password = _password.text;
+    final response = await authProvider.singIn(
+        context: context, email: email, password: password);
+    if (response == true) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user?.emailVerified ?? false) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil("/homeScreen/", (route) => false);
+      } else {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil("/verifyEmail/", (route) => false);
+      }
+    } else {
+      snackBar(context: context, title: "Try again later");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -73,22 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final email = _email.text;
-                    final password = _password.text;
-                    final response = await authProvider.singIn(
-                        context: context, email: email, password: password);
-                    if (response == true) {
-                      final user = FirebaseAuth.instance.currentUser;
-                      if (user?.emailVerified ?? false) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            "/homeScreen/", (route) => false);
-                      } else {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            "/verifyEmail/", (route) => false);
-                      }
-                    }else{
-                      snackBar(context: context, title: "Try again later");
-                    }
+                    signIn(context);
                   },
                   child: const Center(
                     child: Text(

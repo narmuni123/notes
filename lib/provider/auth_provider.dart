@@ -2,19 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class AuthProvider extends ChangeNotifier {
-  var registrationModel;
-  var loginModel;
-
   Future<bool> registration(
       {required context,
       required String email,
       required String password}) async {
     try {
-      final value = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      registrationModel = value;
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -45,7 +41,6 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
       );
-      loginModel = value;
       if (kDebugMode) {
         print(value);
       }

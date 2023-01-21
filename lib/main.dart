@@ -5,6 +5,7 @@ import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:mynotes/screens/auth/registration_screen.dart';
 import 'package:mynotes/screens/auth/verify_email_screen.dart';
 import 'package:mynotes/screens/home/home_screen.dart';
+import 'package:mynotes/screens/home/notes_view_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           "/register/": (context) => const RegistrationScreen(),
           "/homeScreen/": (context) => const HomeScreen(),
           "/emailVerify/": (context) => const VerifyEmailScreen(),
+          "/notesViewScreen/": (context) => const NotesViewScreen(),
         },
       ),
     );
