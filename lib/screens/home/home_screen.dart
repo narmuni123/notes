@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) {
-
+              devtools.log(value.toString());
             },
             itemBuilder: (context) {
               return [
