@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-enum MenuAction {logout}
+enum MenuAction { logout }
 
 class AuthProvider extends ChangeNotifier {
-
   Future<bool> registration(
       {required context,
       required String email,
@@ -62,5 +62,11 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     }
+  }
+
+  Future logout({required context}) async {
+    FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushNamedAndRemoveUntil("/login/", (_) => false);
+    notifyListeners();
   }
 }
