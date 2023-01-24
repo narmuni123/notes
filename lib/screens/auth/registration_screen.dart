@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/interactive_constant.dart';
+import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         context: context, email: email, password: password);
     if (resp == true) {
       Navigator.of(context)
-          .pushNamedAndRemoveUntil("/login/", (route) => false);
+          .pushNamedAndRemoveUntil(loginRoute, (route) => false);
     } else {
       snackBar(context: context, title: "Try again later");
     }
@@ -99,7 +100,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil("/login/", (route) => false);
+                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   },
                   child: const Text(
                     "Login",

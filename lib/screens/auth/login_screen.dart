@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/interactive_constant.dart';
+import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -40,10 +41,10 @@ class _LoginScreenState extends State<LoginScreen> {
       final user = FirebaseAuth.instance.currentUser;
       if (user?.emailVerified ?? false) {
         Navigator.of(context)
-            .pushNamedAndRemoveUntil("/homeScreen/", (route) => false);
+            .pushNamedAndRemoveUntil(homeRoute, (route) => false);
       } else {
         Navigator.of(context)
-            .pushNamedAndRemoveUntil("/verifyEmail/", (route) => false);
+            .pushNamedAndRemoveUntil(emailVerifyRoute, (route) => false);
       }
     } else {
       snackBar(context: context, title: "Try again later");
@@ -106,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        "/register/", (route) => false);
+                        registerRoute, (route) => false);
                   },
                   child: const Text(
                     "Register",

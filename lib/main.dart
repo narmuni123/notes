@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/provider/auth_provider.dart';
 import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:mynotes/screens/auth/registration_screen.dart';
@@ -30,14 +31,14 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: "/splash/",
+        initialRoute: splashRoute,
         routes: {
-          "/splash/": (context) => const SplashScreen(),
-          "/login/": (context) => const LoginScreen(),
-          "/register/": (context) => const RegistrationScreen(),
-          "/homeScreen/": (context) => const HomeScreen(),
-          "/emailVerify/": (context) => const VerifyEmailScreen(),
-          "/notesViewScreen/": (context) => const NotesViewScreen(),
+          splashRoute: (context) => const SplashScreen(),
+          loginRoute: (context) => const LoginScreen(),
+          registerRoute: (context) => const RegistrationScreen(),
+          homeRoute: (context) => const HomeScreen(),
+          emailVerifyRoute: (context) => const VerifyEmailScreen(),
+          notesViewRoute: (context) => const NotesViewScreen(),
        },
       ),
     );
