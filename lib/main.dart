@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: "/notesViewScreen/",
+        initialRoute: "/splash/",
         routes: {
           "/splash/": (context) => const SplashScreen(),
           "/login/": (context) => const LoginScreen(),
