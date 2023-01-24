@@ -18,3 +18,4 @@ class _NotesViewScreenState extends State<NotesViewScreen> {
     );
   }
 }
+
