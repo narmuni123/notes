@@ -35,20 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
         Provider.of<AuthProvider>(context, listen: false);
     final email = _email.text;
     final password = _password.text;
-    final response = await authProvider.singIn(
+    await authProvider.singIn(
         context: context, email: email, password: password);
-    if (response == true) {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user?.emailVerified ?? false) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(homeRoute, (route) => false);
-      } else {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(emailVerifyRoute, (route) => false);
-      }
-    } else {
-      snackBar(context: context, title: "Try again later");
-    }
   }
 
   @override
