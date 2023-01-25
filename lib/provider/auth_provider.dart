@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'dart:developer' as devtools show log;
 
 enum MenuAction { logout }
 
@@ -19,17 +19,11 @@ class AuthProvider extends ChangeNotifier {
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
-        if (kDebugMode) {
-          print("weak password");
-        }
+        devtools.log("weak password");
       } else if (e.code == "email-already-in-use") {
-        if (kDebugMode) {
-          print("Email is already in use");
-        }
+        devtools.log("Email is already in use");
       } else if (e.code == "invalid-email") {
-        if (kDebugMode) {
-          print("invalid email");
-        }
+        devtools.log("invalid email");
       }
       notifyListeners();
       return false;
@@ -45,20 +39,14 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
       );
-      if (kDebugMode) {
-        print(value);
-      }
+      devtools.log(value.toString());
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
-        if (kDebugMode) {
-          print("User not found");
-        }
+        devtools.log("User not found");
       } else if (e.code == "wrong-password") {
-        if (kDebugMode) {
-          print("Wrong password");
-        }
+        devtools.log("Wrong password");
       }
       notifyListeners();
       return false;
