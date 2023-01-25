@@ -34,14 +34,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         Provider.of<AuthProvider>(context, listen: false);
     final email = _email.text;
     final password = _password.text;
-    final resp = await authProvider.registration(
+    await authProvider.registration(
         context: context, email: email, password: password);
-    if (resp == true) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(loginRoute, (route) => false);
-    } else {
-      snackBar(context: context, title: "Try again later");
-    }
   }
 
   @override

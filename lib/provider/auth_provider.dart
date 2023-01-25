@@ -16,15 +16,20 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
       );
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(loginRoute, (route) => false);
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
         devtools.log("weak password");
+        snackBar(context: context, title: "weak-password");
       } else if (e.code == "email-already-in-use") {
         devtools.log("Email is already in use");
+        snackBar(context: context, title: "Email is already in use");
       } else if (e.code == "invalid-email") {
         devtools.log("invalid email");
+        snackBar(context: context, title: "invalid-email");
       }
       notifyListeners();
       return false;
