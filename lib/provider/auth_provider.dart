@@ -30,6 +30,9 @@ class AuthProvider extends ChangeNotifier {
       } else if (e.code == "invalid-email") {
         devtools.log("invalid email");
         snackBar(context: context, title: "invalid-email");
+      } else {
+        devtools.log("Error : ${e.code}");
+        snackBar(context: context, title: "Error : ${e.code}");
       }
       notifyListeners();
       return false;
@@ -63,6 +66,9 @@ class AuthProvider extends ChangeNotifier {
       } else if (e.code == "wrong-password") {
         devtools.log("Wrong password");
         snackBar(context: context, title: "wrong-password");
+      } else {
+        devtools.log("Error : ${e.code}");
+        snackBar(context: context, title: "Error : ${e.code}");
       }
       notifyListeners();
       return false;
