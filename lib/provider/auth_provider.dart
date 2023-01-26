@@ -7,6 +7,7 @@ import 'dart:developer' as devtools show log;
 enum MenuAction { logout }
 
 class AuthProvider extends ChangeNotifier {
+  // Registration call
   Future<bool> registration(
       {required context,
       required String email,
@@ -40,6 +41,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  // Sign in call
   Future<bool> singIn(
       {required context,
       required String email,
@@ -80,6 +82,21 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  // Verify email call
+  Future verifyEmail({required context}) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      await user?.sendEmailVerification();
+      snackBar(context: context, title: "Check your email!!");
+      notifyListeners();
+    } on FirebaseAuthException catch (e) {
+      devtools.log("Error : ${e.code}");
+      snackBar(context: context, title: "Error : ${e.code}");
+      notifyListeners();
+    }
+  }
+
+  // logout call
   Future logout({required context}) async {
     try {
       FirebaseAuth.instance.signOut();
