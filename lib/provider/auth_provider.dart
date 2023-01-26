@@ -18,7 +18,7 @@ class AuthProvider extends ChangeNotifier {
         password: password,
       );
       Navigator.of(context)
-          .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+          .pushNamedAndRemoveUntil(emailVerifyRoute, (route) => false);
       snackBar(context: context, title: "User created successfully");
       notifyListeners();
       return true;
