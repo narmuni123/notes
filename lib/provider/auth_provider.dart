@@ -18,6 +18,7 @@ class AuthProvider extends ChangeNotifier {
       );
       Navigator.of(context)
           .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+      snackBar(context: context, title: "User created successfully");
       notifyListeners();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -51,9 +52,13 @@ class AuthProvider extends ChangeNotifier {
       devtools.log(value.toString());
       final user = FirebaseAuth.instance.currentUser;
       if (user?.emailVerified ?? false) {
+        snackBar(context: context, title: "Log in successful!!");
         Navigator.of(context)
             .pushNamedAndRemoveUntil(homeRoute, (route) => false);
       } else {
+        snackBar(
+            context: context,
+            title: "Log in successful!! please verify email.");
         Navigator.of(context)
             .pushNamedAndRemoveUntil(emailVerifyRoute, (route) => false);
       }
@@ -76,8 +81,15 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future logout({required context}) async {
-    FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (_) => false);
-    notifyListeners();
+    try {
+      FirebaseAuth.instance.signOut();
+      snackBar(context: context, title: "Log out successful.");
+      Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (_) => false);
+      notifyListeners();
+    } on FirebaseAuthException catch (e) {
+      devtools.log("Error : ${e.code}");
+      snackBar(context: context, title: "Error : ${e.code}");
+      notifyListeners();
+    }
   }
 }
