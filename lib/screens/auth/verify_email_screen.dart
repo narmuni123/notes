@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/provider/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({Key? key}) : super(key: key);
@@ -15,8 +12,6 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    AuthProvider authProvider =
-    Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -28,16 +23,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Verify email!!"),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  authProvider.verifyEmail(context: context);
-                },
-                child: const Text("Verify email"),
-              ),
+              const Text("Verify email!! Email sent to you email."),
               SizedBox(
                 height: height * 0.01,
               ),

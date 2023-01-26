@@ -17,8 +17,8 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
       );
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(emailVerifyRoute, (route) => false);
+      await verifyEmail(context: context);
+      Navigator.of(context).pushNamed(emailVerifyRoute);
       snackBar(context: context, title: "User created successfully");
       notifyListeners();
       return true;
@@ -61,6 +61,7 @@ class AuthProvider extends ChangeNotifier {
         snackBar(
             context: context,
             title: "Log in successful!! please verify email.");
+        await verifyEmail(context: context);
         Navigator.of(context)
             .pushNamedAndRemoveUntil(emailVerifyRoute, (route) => false);
       }
