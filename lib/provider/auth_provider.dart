@@ -7,6 +7,7 @@ import 'dart:developer' as devtools show log;
 enum MenuAction { logout }
 
 class AuthProvider extends ChangeNotifier {
+
   // Registration call
   Future<bool> registration(
       {required context,
