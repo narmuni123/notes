@@ -8,9 +8,9 @@ import 'package:mynotes/screens/home/notes_view_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:mynotes/services/auth/auth_services.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  AuthServices.firebase().initialize();
+  await AuthServices.firebase().initialize();
   runApp(const MyApp());
 }
 
