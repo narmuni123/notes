@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/interactive_constant.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/services/auth/auth_exception.dart';
 import 'dart:developer' as devtools show log;
 
 import 'package:mynotes/services/auth/auth_services.dart';
@@ -21,22 +22,20 @@ class Authentication {
       Navigator.of(context).pushNamed(emailVerifyRoute);
       snackBar(context: context, title: "User created successfully");
       return true;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "weak-password") {
-        devtools.log("weak password");
-        snackBar(context: context, title: "weak-password");
-      } else if (e.code == "email-already-in-use") {
-        devtools.log("Email is already in use");
-        snackBar(context: context, title: "Email is already in use");
-      } else if (e.code == "invalid-email") {
-        devtools.log("invalid email");
-        snackBar(context: context, title: "invalid-email");
-      } else {
-        devtools.log("Error : ${e.code}");
-        snackBar(context: context, title: "Error : ${e.code}");
-      }
-      return false;
+    } on WeakPasswordAuthException {
+      devtools.log("weak password");
+      snackBar(context: context, title: "weak-password");
+    } on EmailAlreadyInUseAuthException {
+      devtools.log("Email is already in use");
+      snackBar(context: context, title: "Email is already in use");
+    } on InvalidEmailAuthException {
+      devtools.log("invalid email");
+      snackBar(context: context, title: "invalid-email");
+    } on GenericAuthException {
+      devtools.log("Error : Authentication");
+      snackBar(context: context, title: "Authentication error.");
     }
+    return false;
   }
 
   // Sign in call
@@ -64,33 +63,28 @@ class Authentication {
             .pushNamedAndRemoveUntil(emailVerifyRoute, (route) => false);
       }
       return true;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        devtools.log("User not found");
-        snackBar(context: context, title: "User not found");
-      } else if (e.code == "wrong-password") {
-        devtools.log("Wrong password");
-        snackBar(context: context, title: "wrong-password");
-      } else {
-        devtools.log("Error : ${e.code}");
-        snackBar(context: context, title: "Error : ${e.code}");
-      }
-      return false;
+    } on UserNotFoundAuthException {
+      devtools.log("User not found");
+      snackBar(context: context, title: "User not found");
+    } on WrongPasswordAuthException {
+      devtools.log("Wrong password");
+      snackBar(context: context, title: "wrong-password");
+    } on GenericAuthException {
+      devtools.log("Error : Auth error generic");
+      snackBar(context: context, title: "Authentication error.");
     }
+    return false;
   }
 
-  // Verify email call
+// Verify email call
   static Future verifyEmail({required context}) async {
     try {
       await AuthServices.firebase().sendEmailVerification();
       snackBar(context: context, title: "Check your email!!");
-    } on FirebaseAuthException catch (e) {
-      devtools.log("Error : ${e.code}");
-      snackBar(context: context, title: "Error : ${e.code}");
     }
   }
 
-  // logout call
+// logout call
   static Future logout({required context}) async {
     try {
       AuthServices.firebase().logout();
