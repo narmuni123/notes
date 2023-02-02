@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:provider/provider.dart';
+import 'package:mynotes/services/auth/auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -28,12 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   signIn(context) async {
-    AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
     final email = _email.text;
     final password = _password.text;
-    await authProvider.singIn(
-        context: context, email: email, password: password);
+    await AuthServices.firebase().login(
+      email: email,
+      password: password,
+    );
   }
 
   @override

@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/screens/auth/login_screen.dart';
@@ -7,10 +6,11 @@ import 'package:mynotes/screens/auth/verify_email_screen.dart';
 import 'package:mynotes/screens/home/home_screen.dart';
 import 'package:mynotes/screens/home/notes_view_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
+import 'package:mynotes/services/auth/auth_services.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  AuthServices.firebase().initialize();
   runApp(const MyApp());
 }
 

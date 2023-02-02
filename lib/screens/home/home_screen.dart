@@ -1,18 +1,14 @@
-import 'package:capitalize/capitalize.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/provider/auth_provider.dart';
+import 'package:mynotes/enums/menu_actions.dart';
 import 'dart:developer' as devtools show log;
-
 import 'package:mynotes/reusable/dialog_display.dart';
-import 'package:provider/provider.dart';
+import 'package:mynotes/services/auth/auth_services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    IsCapitalize isCapitalize = IsCapitalize();
-    AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -25,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                   final shouldLogout =
                       await DialogDisplay.exitApp(context: context);
                   if (shouldLogout) {
-                    await authProvider.logout(context: context);
+                    await AuthServices.firebase().logout();
                   }
                   devtools.log(shouldLogout.toString());
                   break;

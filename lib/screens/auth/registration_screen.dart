@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/interactive_constant.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/provider/auth_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:mynotes/services/auth/auth_services.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -30,12 +28,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   register(context) async {
-    AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
     final email = _email.text;
     final password = _password.text;
-    await authProvider.registration(
-        context: context, email: email, password: password);
+    await AuthServices.firebase().createUser(
+      email: email,
+      password: password,
+    );
   }
 
   @override
