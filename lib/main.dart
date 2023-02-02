@@ -1,14 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/provider/auth_provider.dart';
 import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:mynotes/screens/auth/registration_screen.dart';
 import 'package:mynotes/screens/auth/verify_email_screen.dart';
 import 'package:mynotes/screens/home/home_screen.dart';
 import 'package:mynotes/screens/home/notes_view_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,26 +19,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'MyNotes',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: splashRoute,
-        routes: {
-          splashRoute: (context) => const SplashScreen(),
-          loginRoute: (context) => const LoginScreen(),
-          registerRoute: (context) => const RegistrationScreen(),
-          homeRoute: (context) => const HomeScreen(),
-          emailVerifyRoute: (context) => const VerifyEmailScreen(),
-          notesViewRoute: (context) => const NotesViewScreen(),
-       },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'MyNotes',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      initialRoute: splashRoute,
+      routes: {
+        splashRoute: (context) => const SplashScreen(),
+        loginRoute: (context) => const LoginScreen(),
+        registerRoute: (context) => const RegistrationScreen(),
+        homeRoute: (context) => const HomeScreen(),
+        emailVerifyRoute: (context) => const VerifyEmailScreen(),
+        notesViewRoute: (context) => const NotesViewScreen(),
+     },
     );
   }
 }
