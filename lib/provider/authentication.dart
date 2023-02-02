@@ -81,6 +81,9 @@ class Authentication {
     try {
       await AuthServices.firebase().sendEmailVerification();
       snackBar(context: context, title: "Check your email!!");
+    } on GenericAuthException {
+      devtools.log("Error : Email verify");
+      snackBar(context: context, title: "Email verify error.");
     }
   }
 
@@ -90,9 +93,9 @@ class Authentication {
       AuthServices.firebase().logout();
       snackBar(context: context, title: "Log out successful.");
       Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (_) => false);
-    } on FirebaseAuthException catch (e) {
-      devtools.log("Error : ${e.code}");
-      snackBar(context: context, title: "Error : ${e.code}");
+    } on GenericAuthException {
+      devtools.log("Error : Logout");
+      snackBar(context: context, title: "Logout error.");
     }
   }
 }
