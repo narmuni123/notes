@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/services/auth/auth_services.dart';
+import 'package:mynotes/provider/authentication.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -30,9 +30,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   register(context) async {
     final email = _email.text;
     final password = _password.text;
-    await AuthServices.firebase().createUser(
+    await Authentication.registration(
       email: email,
       password: password,
+      context: context,
     );
   }
 

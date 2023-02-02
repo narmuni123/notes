@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/enums/menu_actions.dart';
+import 'package:mynotes/provider/authentication.dart';
 import 'dart:developer' as devtools show log;
 import 'package:mynotes/reusable/dialog_display.dart';
-import 'package:mynotes/services/auth/auth_services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                   final shouldLogout =
                       await DialogDisplay.exitApp(context: context);
                   if (shouldLogout) {
-                    await AuthServices.firebase().logout();
+                    await Authentication.logout(context: context);
                   }
                   devtools.log(shouldLogout.toString());
                   break;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/services/auth/auth_services.dart';
+import 'package:mynotes/provider/authentication.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  AuthServices.firebase().sendEmailVerification();
+                  Authentication.verifyEmail(context: context);
                 },
                 child: const Text("Verify email"),
               ),
