@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-
-snackBar({required context, required String title}){
+snackBar({required context, required String title}) {
   final snackBar = SnackBar(
     content: Text(title),
   );
