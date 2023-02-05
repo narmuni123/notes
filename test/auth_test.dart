@@ -7,8 +7,13 @@ void main(){
 }
 
 class MockAuthProvider implements AuthProvider{
+
+  var _isInitialized = false;
+
+  bool get isInitialized => _isInitialized;
+
   @override
-  Future<AuthUser> createUser({required String email, required String password}) {
+  Future<AuthUser> createUser({required String email, required String password,}) {
     // TODO: implement createUser
     throw UnimplementedError();
   }
@@ -24,7 +29,7 @@ class MockAuthProvider implements AuthProvider{
   }
 
   @override
-  Future<AuthUser> login({required String email, required String password}) {
+  Future<AuthUser> login({required String email, required String password,}) {
     // TODO: implement login
     throw UnimplementedError();
   }
