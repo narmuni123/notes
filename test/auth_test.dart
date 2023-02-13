@@ -7,6 +7,7 @@ void main() {}
 class NotInitializedException implements Exception {}
 
 class MockAuthProvider implements AuthProvider {
+  AuthUser? _user;
   var _isInitialized = false;
 
   bool get isInitialized => _isInitialized;
@@ -28,7 +29,7 @@ class MockAuthProvider implements AuthProvider {
 
   @override
   // TODO: implement currentUser
-  AuthUser? get currentUser => throw UnimplementedError();
+  AuthUser? get currentUser => _user;
 
   @override
   Future<void> initialize() {
