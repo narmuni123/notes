@@ -4,6 +4,8 @@ import 'package:test/test.dart';
 
 void main() {}
 
+class NotInitializedException implements Exception{}
+
 class MockAuthProvider implements AuthProvider {
   var _isInitialized = false;
 
