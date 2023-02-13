@@ -1,6 +1,6 @@
+import 'package:mynotes/services/auth/auth_exception.dart';
 import 'package:mynotes/services/auth/auth_provider.dart';
 import 'package:mynotes/services/auth/auth_user.dart';
-import 'package:test/test.dart';
 
 void main() {}
 
@@ -28,13 +28,14 @@ class MockAuthProvider implements AuthProvider {
   }
 
   @override
-  // TODO: implement currentUser
   AuthUser? get currentUser => _user;
 
   @override
-  Future<void> initialize() {
-    // TODO: implement initialize
-    throw UnimplementedError();
+  Future<void> initialize() async {
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
+    _isInitialized = true;
   }
 
   @override
@@ -42,8 +43,12 @@ class MockAuthProvider implements AuthProvider {
     required String email,
     required String password,
   }) {
-    // TODO: implement login
-    throw UnimplementedError();
+    if (!isInitialized) throw NotInitializedException();
+    if (email == 'foo@bar.com') throw UserNotFoundAuthException();
+    if (password == 'foobar') throw WrongPasswordAuthException();
+    const user = AuthUser(isEmailVerified: false);
+    _user = user;
+    return Future.value(user);
   }
 
   @override
