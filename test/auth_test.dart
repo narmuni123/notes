@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mynotes/services/auth/auth_exception.dart';
 import 'package:mynotes/services/auth/auth_provider.dart';
@@ -8,6 +10,13 @@ void main() {
     final provider = MockAuthProvider();
     test('Should not be initialized to begin with', () {
       expect(provider.isInitialized, false);
+    });
+
+    test('Cannot logout if not initialized', () {
+      expect(
+        provider.logout(),
+        throwsA(const TypeMatcher<NotInitializedException>()),
+      );
     });
   });
 }
