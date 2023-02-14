@@ -39,8 +39,8 @@ void main() {
       ),
     );
 
-    test('Create a user should delegate to login function', () {
-      final badEmailUser = provider.createUser(
+    test('Create a user should delegate to login function', () async {
+      final badEmailUser = await provider.createUser(
         email: "foo@bar.com",
         password: "anyPassword",
       );
@@ -51,7 +51,7 @@ void main() {
         ),
       );
 
-      final badPasswordUser = provider.createUser(
+      final badPasswordUser = await provider.createUser(
         email: "test@bar.com",
         password: "foobar",
       );
@@ -61,6 +61,20 @@ void main() {
           const TypeMatcher<WrongPasswordAuthException>(),
         ),
       );
+
+      final user = await provider.createUser(
+        email: "foo",
+        password: "bar",
+      );
+      expect(provider.currentUser, user);
+      expect(user.isEmailVerified, false);
+    });
+
+    test('Logged in user should be able to get verified', () {
+      provider.sendEmailVerification();
+      final user = provider.currentUser;
+      expect(user, isNotNull);
+      expect(user!.isEmailVerified, true);
     });
   });
 }
