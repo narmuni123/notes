@@ -50,6 +50,17 @@ void main() {
           const TypeMatcher<UserNotFoundAuthException>(),
         ),
       );
+
+      final badPasswordUser = provider.createUser(
+        email: "test@bar.com",
+        password: "foobar",
+      );
+      expect(
+        badPasswordUser,
+        throwsA(
+          const TypeMatcher<WrongPasswordAuthException>(),
+        ),
+      );
     });
   });
 }
