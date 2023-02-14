@@ -1,9 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mynotes/services/auth/auth_exception.dart';
 import 'package:mynotes/services/auth/auth_provider.dart';
 import 'package:mynotes/services/auth/auth_user.dart';
 
-void main() {}
+void main() {
+  group('Mock Authentication', () {
+    final provider = MockAuthProvider();
+    test('Should not be initialized to begin with', () {
+      expect(provider.isInitialized, false);
+    });
+  });
+}
 
 class NotInitializedException implements Exception {}
 
