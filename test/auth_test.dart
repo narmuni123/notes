@@ -38,6 +38,19 @@ void main() {
         Duration(seconds: 2),
       ),
     );
+
+    test('Create a user should delegate to login function', () {
+      final badEmailUser = provider.createUser(
+        email: "foo@bar.com",
+        password: "anyPassword",
+      );
+      expect(
+        badEmailUser,
+        throwsA(
+          const TypeMatcher<UserNotFoundAuthException>(),
+        ),
+      );
+    });
   });
 }
 
