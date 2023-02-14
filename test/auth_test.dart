@@ -18,6 +18,11 @@ void main() {
         throwsA(const TypeMatcher<NotInitializedException>()),
       );
     });
+
+    test('Should be able to initialize', () async {
+      provider.initialize();
+      expect(provider.isInitialized, true);
+    });
   });
 }
 
