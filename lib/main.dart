@@ -8,7 +8,7 @@ import 'package:mynotes/screens/home/notes_view_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:mynotes/services/auth/auth_services.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AuthServices.firebase().initialize();
   runApp(const MyApp());
@@ -33,8 +33,7 @@ class MyApp extends StatelessWidget {
         homeRoute: (context) => const HomeScreen(),
         emailVerifyRoute: (context) => const VerifyEmailScreen(),
         notesViewRoute: (context) => const NotesViewScreen(),
-     },
+      },
     );
   }
 }
-
