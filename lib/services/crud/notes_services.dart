@@ -1,30 +1,38 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
+import 'package:mynotes/services/crud/crus_exception.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' show join;
 
-class DatabaseAlreadyOpenException implements Exception {}
-
-class UnableToGetDocumentsDirectory implements Exception {}
-
-class DatabaseIsNotOpen implements Exception {}
-
-class CouldNotDeleteUser implements Exception {}
-
-class CouldNotDeleteNote implements Exception {}
-
-class UserAlreadyExists implements Exception {}
-
-class CouldNotFindUser implements Exception {}
-
-class CouldNotFindNote implements Exception {}
-
 class NotesService {
   Database? _db;
 
+  Future<DatabaseNotes> updateNote({
+    required DatabaseNotes note,
+    required String text,
+  }) async {
+    final db = _getDatabaseOrThrow();
+    await getNote(id: note.id);
+    final updateCount = await db.update(noteTable, {
+      textColumn: text,
+      isSynchedWithCloudColumn: 0,
+    });
 
+    if (updateCount == 0) {
+      throw CouldNotUpdateNote();
+    } else {
+      return await getNote(id: note.id);
+    }
+  }
+
+  Future<Iterable<DatabaseNotes>> getAllNotes() async {
+    final db = _getDatabaseOrThrow();
+    final notes = await db.query(
+      noteTable,
+    );
+
+    return notes.map((e) => DatabaseNotes.fromRow(e));
+  }
 
   Future<DatabaseNotes> getNote({
     required int id,
