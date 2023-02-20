@@ -11,8 +11,56 @@ class DatabaseIsNotOpen implements Exception {}
 
 class CouldNotDeleteUser implements Exception {}
 
+class UserAlreadyExists implements Exception {}
+
+class CouldNotFindUser implements Exception {}
+
 class NotesService {
   Database? _db;
+
+  Future<DatabaseUser> getUser({
+    required String email,
+  }) async {
+    final db = _getDatabaseOrThrow();
+    final results = await db.query(
+      userTable,
+      limit: 1,
+      where: 'email = ?',
+      whereArgs: [email.toLowerCase()],
+    );
+
+    if (results.isEmpty) {
+      throw CouldNotFindUser();
+    }
+
+    final userId = await db.insert(userTable, {
+    emailColumn: email.toLowerCase();
+    });
+
+    return DatabaseUser.fromRow(results.first);
+  }
+
+  Future<DatabaseUser> createUser({
+    required String email,
+  }) async {
+    final db = _getDatabaseOrThrow();
+    final results = await db.query(
+      userTable,
+      limit: 1,
+      where: 'email = ?',
+      whereArgs: [email.toLowerCase()],
+    );
+
+    if (results.isNotEmpty) {
+      throw UserAlreadyExists();
+    }
+
+    final userId = await db.insert(userTable, {
+    emailColumn: email.toLowerCase();
+    });
+
+    return DatabaseUser(id: userId, email: email,);
+  }
 
   Future<void> deleteUser({
     required String email,
@@ -111,7 +159,7 @@ class DatabaseNotes {
         userId = map[userIdColumn] as int,
         text = map[textColumn] as String,
         isSynchedToCloud =
-            (map[isSynchedWithCloudColumn] as int) == 1 ? true : false;
+        (map[isSynchedWithCloudColumn] as int) == 1 ? true : false;
 
   @override
   String toString() =>
