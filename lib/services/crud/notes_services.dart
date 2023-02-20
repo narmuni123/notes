@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,12 +13,84 @@ class DatabaseIsNotOpen implements Exception {}
 
 class CouldNotDeleteUser implements Exception {}
 
+class CouldNotDeleteNote implements Exception {}
+
 class UserAlreadyExists implements Exception {}
 
 class CouldNotFindUser implements Exception {}
 
+class CouldNotFindNote implements Exception {}
+
 class NotesService {
   Database? _db;
+
+
+
+  Future<DatabaseNotes> getNote({
+    required int id,
+  }) async {
+    final db = _getDatabaseOrThrow();
+    final notes = await db.query(
+      noteTable,
+      limit: 1,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (notes.isEmpty) {
+      throw CouldNotFindNote();
+    } else {
+      return DatabaseNotes.fromRow(notes.first);
+    }
+  }
+
+  Future<int> deleteAllNotes() async {
+    final db = _getDatabaseOrThrow();
+    return await db.delete(noteTable);
+  }
+
+  Future<void> deleteNote({
+    required int id,
+  }) async {
+    final db = _getDatabaseOrThrow();
+    final deleteCount = await db.delete(
+      noteTable,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (deleteCount != 1) {
+      throw CouldNotDeleteNote();
+    }
+  }
+
+  Future<DatabaseNotes> createNote({
+    required DatabaseUser owner,
+  }) async {
+    final db = _getDatabaseOrThrow();
+
+    final dbUser = await getUser(email: owner.email);
+    if (dbUser != owner) {
+      throw CouldNotFindUser();
+    }
+
+    const text = '';
+    // create the note
+
+    final notesId = await db.insert(noteTable, {
+      userIdColumn: owner.id,
+      textColumn: text,
+      isSynchedWithCloudColumn: 1,
+    });
+
+    final notes = DatabaseNotes(
+      id: notesId,
+      userId: owner.id,
+      text: text,
+      isSynchedToCloud: true,
+    );
+
+    return notes;
+  }
 
   Future<DatabaseUser> getUser({
     required String email,
@@ -31,13 +105,9 @@ class NotesService {
 
     if (results.isEmpty) {
       throw CouldNotFindUser();
+    } else {
+      return DatabaseUser.fromRow(results.first);
     }
-
-    final userId = await db.insert(userTable, {
-    emailColumn: email.toLowerCase();
-    });
-
-    return DatabaseUser.fromRow(results.first);
   }
 
   Future<DatabaseUser> createUser({
@@ -56,10 +126,13 @@ class NotesService {
     }
 
     final userId = await db.insert(userTable, {
-    emailColumn: email.toLowerCase();
+      emailColumn: email.toLowerCase(),
     });
 
-    return DatabaseUser(id: userId, email: email,);
+    return DatabaseUser(
+      id: userId,
+      email: email,
+    );
   }
 
   Future<void> deleteUser({
@@ -159,7 +232,7 @@ class DatabaseNotes {
         userId = map[userIdColumn] as int,
         text = map[textColumn] as String,
         isSynchedToCloud =
-        (map[isSynchedWithCloudColumn] as int) == 1 ? true : false;
+            (map[isSynchedWithCloudColumn] as int) == 1 ? true : false;
 
   @override
   String toString() =>
