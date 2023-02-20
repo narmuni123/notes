@@ -19,6 +19,16 @@ class NotesService {
       final dbPath = join(docPath.path, dbName);
       final db = await openDatabase(dbPath);
       _db = db;
+
+      // create user table
+
+      const createTable = '''CREATE TABLE IF NOT EXISTS "user" (
+        "id"	INTEGER NOT NULL,
+        "email"	TEXT NOT NULL UNIQUE,
+        PRIMARY KEY("id" AUTOINCREMENT)
+      ); ''';
+
+      await db.execute(createTable);
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsDirectory();
     }
