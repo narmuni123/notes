@@ -24,7 +24,11 @@ class NotesService {
     required String text,
   }) async {
     final db = _getDatabaseOrThrow();
+
+    // note exists
     await getNote(id: note.id);
+
+    // update db
     final updateCount = await db.update(noteTable, {
       textColumn: text,
       isSynchedWithCloudColumn: 0,
@@ -33,7 +37,11 @@ class NotesService {
     if (updateCount == 0) {
       throw CouldNotUpdateNote();
     } else {
-      return await getNote(id: note.id);
+      final updateNote = await getNote(id: note.id);
+      _notes.removeWhere((element) => element.id == id);
+      _notes.add(updateNote);
+      _notesStreamController.add(_notes);
+      return updateNote;
     }
   }
 
@@ -59,7 +67,11 @@ class NotesService {
     if (notes.isEmpty) {
       throw CouldNotFindNote();
     } else {
-      return DatabaseNotes.fromRow(notes.first);
+      final note = DatabaseNotes.fromRow(notes.first);
+      _notes.removeWhere((element) => element.id == id);
+      _notes.add(note);
+      _notesStreamController.add(_notes);
+      return note;
     }
   }
 
