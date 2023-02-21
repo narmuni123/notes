@@ -65,7 +65,10 @@ class NotesService {
 
   Future<int> deleteAllNotes() async {
     final db = _getDatabaseOrThrow();
-    return await db.delete(noteTable);
+    final deleteCount = await db.delete(noteTable);
+    _notes = [];
+    _notesStreamController.add(_notes);
+    return deleteCount;
   }
 
   Future<void> deleteNote({
@@ -80,6 +83,9 @@ class NotesService {
 
     if (deleteCount != 1) {
       throw CouldNotDeleteNote();
+    } else {
+      _notes.removeWhere((notes) => notes.id == id);
+      _notesStreamController.add(_notes);
     }
   }
 
@@ -108,6 +114,10 @@ class NotesService {
       text: text,
       isSynchedToCloud: true,
     );
+
+    _notes.add(notes);
+
+    _notesStreamController.add(_notes);
 
     return notes;
   }
@@ -204,6 +214,9 @@ class NotesService {
 
       // create note table
       await db.execute(createNoteTable);
+
+      //cache notes
+      await _cacheNotes();
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsDirectory();
     }
