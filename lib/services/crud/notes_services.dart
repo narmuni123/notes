@@ -11,7 +11,7 @@ class NotesService {
   List<DatabaseNotes> _notes = [];
 
   final _notesStreamController =
-      StreamController<List<DatabaseNotes>>.broadcast();
+  StreamController<List<DatabaseNotes>>.broadcast();
 
   Future<DatabaseUser> getOrCreateUser({
     required String email,
@@ -295,7 +295,7 @@ class DatabaseNotes {
         userId = map[userIdColumn] as int,
         text = map[textColumn] as String,
         isSynchedToCloud =
-            (map[isSynchedWithCloudColumn] as int) == 1 ? true : false;
+        (map[isSynchedWithCloudColumn] as int) == 1 ? true : false;
 
   @override
   String toString() =>
