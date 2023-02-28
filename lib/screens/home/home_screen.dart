@@ -3,9 +3,33 @@ import 'package:mynotes/enums/menu_actions.dart';
 import 'package:mynotes/provider/authentication.dart';
 import 'dart:developer' as devtools show log;
 import 'package:mynotes/reusable/dialog_display.dart';
+import 'package:mynotes/services/auth/auth_services.dart';
+import 'package:mynotes/services/crud/notes_services.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final NotesService _notesService;
+
+  String get userEmail => AuthServices.firebase().currentUser!.email;
+
+  @override
+  void initState() {
+    _notesService = NotesService();
+    _notesService.open();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _notesService.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
