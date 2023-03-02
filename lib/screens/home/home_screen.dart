@@ -16,7 +16,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final NotesService _notesService;
 
-  String get userEmail => AuthServices.firebase().currentUser!.email;
+  String get userEmail =>
+      AuthServices
+          .firebase()
+          .currentUser!
+          .email;
 
   @override
   void initState() {
@@ -33,34 +37,51 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-        centerTitle: true,
-        actions: [
-          PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
-              switch (value) {
-                case MenuAction.logout:
-                  final shouldLogout =
-                      await DialogDisplay.exitApp(context: context);
-                  if (shouldLogout) {
-                    await Authentication.logout(context: context);
-                  }
-                  devtools.log(shouldLogout.toString());
-                  break;
-              }
-            },
-            itemBuilder: (context) {
-              return [
-                const PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: Text("Log out"),
-                ),
-              ];
-            },
-          ),
-        ],
-      ),
+        appBar: AppBar(
+          title: const Text("Home"),
+          centerTitle: true,
+          actions: [
+            PopupMenuButton<MenuAction>(
+              onSelected: (value) async {
+                switch (value) {
+                  case MenuAction.logout:
+                    final shouldLogout =
+                    await DialogDisplay.exitApp(context: context);
+                    if (shouldLogout) {
+                      await Authentication.logout(context: context);
+                    }
+                    devtools.log(shouldLogout.toString());
+                    break;
+                }
+              },
+              itemBuilder: (context) {
+                return [
+                  const PopupMenuItem<MenuAction>(
+                    value: MenuAction.logout,
+                    child: Text("Log out"),
+                  ),
+                ];
+              },
+            ),
+          ],
+        ),
+        body: FutureBuilder(
+        future: _notesService.getOrCreateUser(email: userEmail),
+    builder: (context, snapshot) {
+    switch (snapshot.connectionState) {
+    case ConnectionState.none:
+    // TODO: Handle this case.
+    break;
+    case ConnectionState.waiting:
+    // TODO: Handle this case.
+    break;
+    case ConnectionState.active:
+    // TODO: Handle this case.
+    break;
+    case ConnectionState.done:
+    return const Text("Hello World");
+    },
+    ),
     );
+    }
   }
-}
