@@ -66,7 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              return const Text("Hello World");
+              return StreamBuilder(
+                  stream: _notesService.allNotes,
+                  builder: (context, snap) {
+                    switch (snap.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Text("Waiting for notes ..");
+                      default:
+                        return const CircularProgressIndicator();
+                    }
+                  });
             default:
               return const CircularProgressIndicator();
           }
