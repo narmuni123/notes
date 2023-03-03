@@ -4,6 +4,7 @@ import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:mynotes/screens/auth/registration_screen.dart';
 import 'package:mynotes/screens/auth/verify_email_screen.dart';
 import 'package:mynotes/screens/home/home_screen.dart';
+import 'package:mynotes/screens/notes/new_notes_view.dart';
 import 'package:mynotes/screens/notes/notes_view_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:mynotes/services/auth/auth_services.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         homeRoute: (context) => const HomeScreen(),
         emailVerifyRoute: (context) => const VerifyEmailScreen(),
         notesViewRoute: (context) => const NotesViewScreen(),
+        newNotesRoute: (context) => const NewNotesView(),
       },
     );
   }

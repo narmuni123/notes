@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/enums/menu_actions.dart';
 import 'package:mynotes/provider/authentication.dart';
 import 'dart:developer' as devtools show log;
@@ -39,6 +40,16 @@ class _NotesViewScreenState extends State<NotesViewScreen> {
         ),
         centerTitle: true,
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                newNotesRoute,
+              );
+            },
+            icon: const Icon(
+              Icons.add,
+            ),
+          ),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               switch (value) {
