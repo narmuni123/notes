@@ -4,7 +4,7 @@ import 'package:mynotes/screens/auth/login_screen.dart';
 import 'package:mynotes/screens/auth/registration_screen.dart';
 import 'package:mynotes/screens/auth/verify_email_screen.dart';
 import 'package:mynotes/screens/home/home_screen.dart';
-import 'package:mynotes/screens/home/notes_view_screen.dart';
+import 'package:mynotes/screens/notes/notes_view_screen.dart';
 import 'package:mynotes/screens/intro/splash_Screen.dart';
 import 'package:mynotes/services/auth/auth_services.dart';
 
