@@ -84,6 +84,7 @@ class _NotesViewScreenState extends State<NotesViewScreen> {
                   builder: (context, snap) {
                     switch (snap.connectionState) {
                       case ConnectionState.waiting:
+                      case ConnectionState.active:
                         return const Text("Waiting for notes ..");
                       default:
                         return const CircularProgressIndicator();
