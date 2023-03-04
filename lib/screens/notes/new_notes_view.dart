@@ -89,7 +89,7 @@ class _NewNotesViewState extends State<NewNotesView> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              _notes = snapshot.data as DatabaseNotes;
+              _notes = snapshot.data as DatabaseNotes?;
               _setUpTextControllerListener();
               return TextFormField(
                 controller: _textController,
