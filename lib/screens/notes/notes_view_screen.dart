@@ -79,8 +79,8 @@ class _NotesViewScreenState extends State<NotesViewScreen> {
                   switch (snap.connectionState) {
                     case ConnectionState.waiting:
                     case ConnectionState.active:
-                      final allNotes = snapshot.data as List<DatabaseNotes>;
-                      if (snapshot.hasData) {
+                      if (snap.hasData) {
+                        final allNotes = snap.data as List<DatabaseNotes>;
                         return ListView.builder(
                           itemCount: allNotes.length,
                           itemBuilder: (_, int index) {
@@ -100,7 +100,9 @@ class _NotesViewScreenState extends State<NotesViewScreen> {
                         );
                       }
                     default:
-                      return const CircularProgressIndicator();
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                   }
                 },
               );
