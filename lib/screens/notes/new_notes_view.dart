@@ -50,6 +50,7 @@ class _NewNotesViewState extends State<NewNotesView> {
   }
 
   void _deleteNoteIfTextIsEmpty() {
+    print("Delete");
     final note = _notes;
     if (_textController.text.isEmpty && note != null) {
       _notesService.deleteNote(id: note.id);
@@ -57,6 +58,7 @@ class _NewNotesViewState extends State<NewNotesView> {
   }
 
   void _saveNoteIfTextNotEmpty() async {
+    print("save");
     final note = _notes;
     final text = _textController.text;
     if (note != null && text.isNotEmpty) {
