@@ -84,12 +84,13 @@ class _NotesViewScreenState extends State<NotesViewScreen> {
                         return ListView.builder(
                           itemCount: allNotes.length,
                           itemBuilder: (_, int index) {
+                            final note = allNotes[index];
                             return ListTile(
                               title: Text(
-                                allNotes[index].id.toString(),
-                              ),
-                              subtitle: Text(
-                                allNotes[index].text,
+                                note.text,
+                                maxLines: 1,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             );
                           },
