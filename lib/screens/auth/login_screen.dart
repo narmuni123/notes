@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration:
-                      const InputDecoration(hintText: "Enter your password"),
+                      const InputDecoration(hintText: "Enter password"),
                 ),
                 SizedBox(
                   height: height * 0.01,
